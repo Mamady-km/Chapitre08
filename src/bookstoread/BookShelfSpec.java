@@ -1,13 +1,12 @@
 package bookstoread;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BookShelfSpec {
     private BookShelf shelf;
@@ -45,7 +44,7 @@ public class BookShelfSpec {
             books.add("The Mythical Man-Month");
             fail(() -> "Should not be able to add book to books");
         } catch (Exception e) {
-            assertTrue(e instanceof UnsupportedOperationException, () -> "Should throw UnsupportedOperationException.");
+            assertInstanceOf(UnsupportedOperationException.class, e, () -> "Should throw UnsupportedOperationException.");
         }
     }
     @Test
