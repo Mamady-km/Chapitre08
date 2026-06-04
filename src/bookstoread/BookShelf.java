@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookShelf {
-    private final List<String> books = new ArrayList<>();
+    private final List<Book> books = new ArrayList<>();
 
-    public List<String> books() {
+    public List<Book> books() {
         return Collections.unmodifiableList(books);
     }
 
@@ -18,7 +18,7 @@ public class BookShelf {
         books.addAll(Arrays.asList(booksToAdd));
     }
 
-    public List<String> arrange() {
+    public List<Book> arrange() {
         return books.stream().sorted().collect(Collectors.toList());
     }
 }
