@@ -18,8 +18,21 @@ public class Book implements Comparable<Book> {
         return title;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public LocalDate getPublishedOn() {
+        return publishedOn;
+    }
+
     @Override
     public int compareTo(Book that) {
         return this.title.compareTo(that.title);
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

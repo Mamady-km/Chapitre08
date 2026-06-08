@@ -7,12 +7,10 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,6 +56,7 @@ public class BookShelfSpec {
 
     @Test
     void bookshelfContainsTwoBooksWhenTwoBooksAdded() {
+
         shelf.add(effectiveJava, codeComplete);
 
         assertEquals(2, shelf.books().size());
@@ -65,6 +64,7 @@ public class BookShelfSpec {
 
     @Test
     void emptyBookShelfWhenAddIsCalledWithoutBooks() {
+
         shelf.add();
 
         assertTrue(shelf.books().isEmpty());
@@ -116,7 +116,8 @@ public class BookShelfSpec {
 
         List<Book> books =
                 shelf.arrange(
-                        Comparator.comparing(Book::getTitle).reversed()
+                        Comparator.comparing(Book::getTitle)
+                                .reversed()
                 );
 
         assertEquals(
@@ -155,5 +156,26 @@ public class BookShelfSpec {
 
         assertThat(booksByPublicationYear.get(Year.of(1975)))
                 .containsExactly(mythical);
+    }
+
+    @Test
+    @DisplayName("books inside bookshelf are grouped by author")
+    void groupBooksInsideBookShelfByAuthor() {
+
+        shelf.add(
+                effectiveJava,
+                codeComplete,
+                mythical,
+                cleanCode
+        );
+
+        Map<String, List<Book>> booksByAuthor =
+                shelf.groupBy(Book::getAuthor);
+
+        assertThat(booksByAuthor)
+                .containsKey("Joshua Bloch")
+                .containsKey("Steve McConnell")
+                .containsKey("Frederick Brooks")
+                .containsKey("Robert C. Martin");
     }
 }

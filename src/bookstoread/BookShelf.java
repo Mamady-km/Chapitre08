@@ -2,6 +2,7 @@ package bookstoread;
 
 import java.time.Year;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BookShelf {
@@ -26,11 +27,19 @@ public class BookShelf {
                 .collect(Collectors.toList());
     }
 
+
     public Map<Year, List<Book>> groupByPublicationYear() {
+        return groupBy(
+                book -> Year.of(book.getPublishedOn().getYear())
+        );
+    }
+
+
+
+    public <K> Map<K, List<Book>> groupBy(Function<Book, K> criteria) {
+
         return books.stream()
                 .filter(Objects::nonNull)
-                .collect(Collectors.groupingBy(
-                        book -> Year.from(book.getPublishedOn())
-                ));
+                .collect(Collectors.groupingBy(criteria));
     }
 }
