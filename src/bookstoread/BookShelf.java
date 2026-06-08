@@ -1,9 +1,11 @@
 package bookstoread;
 
+import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class BookShelf {
+
     private final List<Book> books = new ArrayList<>();
 
     public List<Book> books() {
@@ -14,12 +16,21 @@ public class BookShelf {
         books.addAll(Arrays.asList(booksToAdd));
     }
 
-
     public List<Book> arrange() {
-        return  arrange(Comparator.naturalOrder());
-    }
-    public List<Book> arrange(Comparator<Book> criteria) {
-        return books.stream().sorted(criteria).collect(Collectors.toList());
+        return arrange(Comparator.naturalOrder());
     }
 
+    public List<Book> arrange(Comparator<Book> criteria) {
+        return books.stream()
+                .sorted(criteria)
+                .collect(Collectors.toList());
+    }
+
+    public Map<Year, List<Book>> groupByPublicationYear() {
+        return books.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.groupingBy(
+                        book -> Year.from(book.getPublishedOn())
+                ));
+    }
 }
